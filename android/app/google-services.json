@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "659833454474",
+    "project_id": "gallery-flutter-e6cb6",
+    "storage_bucket": "gallery-flutter-e6cb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659833454474:android:cc26cbd4452027de2cd273",
+        "android_client_info": {
+          "package_name": "com.sawrose.photo_gallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659833454474-bu1750jgjmtm0l38q0g00q3o2snqmc0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhw7aKVITVfIxPEA_7l08j-ArDjIIG8TE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659833454474-bu1750jgjmtm0l38q0g00q3o2snqmc0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
