@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery/app/bloc/app_bloc.dart';
 import 'package:photo_gallery/app/routes/routes.dart';
+import 'package:photo_gallery/theme.dart';
 
 class App extends StatelessWidget {
   const App({

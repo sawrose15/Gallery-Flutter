@@ -359,14 +359,14 @@ PODS:
   - Firebase/Storage (8.14.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.14.0)
-  - firebase_auth (3.3.12):
+  - firebase_auth (3.3.13):
     - Firebase/Auth (= 8.14.0)
     - firebase_core
     - Flutter
   - firebase_core (1.14.0):
     - Firebase/CoreOnly (= 8.14.0)
     - Flutter
-  - firebase_storage (10.2.10):
+  - firebase_storage (10.2.11):
     - Firebase/Storage (= 8.14.0)
     - firebase_core
     - Flutter
@@ -501,9 +501,9 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: dd4c0ed7d60794e3890f0cf6566d749838fe9ee0
   Firebase: 7e8fe528c161b9271d365217a74c16aaf834578e
-  firebase_auth: 363370737d33bad09a838cd109f7589bc48533cd
+  firebase_auth: e720e83a58c9efe4f3b8a96b4afe2fbf84fdb28e
   firebase_core: b0b382f1497ab407aceb25e41e3036c8798c1609
-  firebase_storage: aa68bef4cb41e2acd3bc6abccfe86ec0607470d1
+  firebase_storage: f8843a3d37aafd048659f2cb523107bb54e36f69
   FirebaseAuth: c5fde343630090253d3af7e2d35697b414b40202
   FirebaseCore: b84a44ee7ba999e0f9f76d198a9c7f60a797b848
   FirebaseCoreDiagnostics: fd0c8490f34287229c1d6c103d3a55f81ec85712
