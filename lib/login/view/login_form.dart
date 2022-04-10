@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:photo_gallery/login/login.dart';
+import 'package:photo_gallery/signup/sign_up.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -123,8 +124,7 @@ class _SignUpInput extends StatelessWidget {
     return TextButton(
         key: const Key('loginForm_SignUpButton'),
         onPressed: () =>
-        // Navigator.of(context).push<void>(ABC),
-        const Text("Sign Up Clicked"),
+          Navigator.of(context).push<void>(SignUpPage.route()),
         child: Text(
           'Create Account',
           style: TextStyle(color: theme.primaryColor),
