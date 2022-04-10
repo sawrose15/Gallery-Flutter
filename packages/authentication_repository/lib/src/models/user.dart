@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class User extends Equatable {
-  const User({@required this.id, this.email, this.name});
+  const User({@required this.id, this.email, this.userName});
 
   final String? id;
   final String? email;
-  final String? name;
+  final String? userName;
 
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '');
@@ -18,5 +18,5 @@ class User extends Equatable {
   bool get isNotEmpty => this != User.empty;
 
   @override
-  List<Object?> get props => [id, email, name];
+  List<Object?> get props => [id, email, userName];
 }
