@@ -1,0 +1,23 @@
+name: firestore_photo_api
+description: My new Firestore package
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  cloud_firestore: ^3.1.10
+  fake_cloud_firestore: ^1.2.1
+  flutter:
+    sdk: flutter
+  photo_api:
+    path: ../photo_api
+  authentication_repository:
+    path: ../authentication_repository
+
+dev_dependencies:
+  coverage: ^1.1.0
+  mocktail: ^0.2.0
+  test: ^1.19.2
+  very_good_analysis: ^2.4.0
