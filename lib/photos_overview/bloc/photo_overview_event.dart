@@ -20,4 +20,16 @@ class PhotoOverviewFilterChanged extends PhotoOverviewEvent {
   List<Object?> get props => [filter];
 }
 
+class PhotoOverviewUploadPhoto extends PhotoOverviewEvent {
+  const PhotoOverviewUploadPhoto(
+      this.userId,
+      this.filePath);
+
+  final String userId;
+  final String filePath;
+
+  @override
+  List<Object?> get props => [userId,filePath];
+}
+
 

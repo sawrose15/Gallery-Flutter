@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:photo_gallery/app/app.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_gallery/app/app.dart';
 
 class PhotoOverviewLogoutButton extends StatelessWidget {
   const PhotoOverviewLogoutButton({Key? key}) : super(key: key);

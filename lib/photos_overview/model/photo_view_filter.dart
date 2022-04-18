@@ -1,4 +1,4 @@
-import 'package:photo_repository/photo_repository.dart';
+import 'package:photo_api/photo_api.dart';
 
 enum PhotoViewFilter {
   oldest_latest,
@@ -14,7 +14,7 @@ extension PhotoViewFilterX on PhotoViewFilter {
       case PhotoViewFilter.alphabetically:
         return false;
       case PhotoViewFilter.favorite:
-        return true;
+        return false;
     }
   }
 
