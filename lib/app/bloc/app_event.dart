@@ -20,3 +20,11 @@ class AppUserChanged extends AppEvent {
   List<Object> get props => [user];
 }
 
+class AppUploadPhoto extends AppEvent {
+  const AppUploadPhoto(this.filePath);
+  final String filePath;
+
+  @override
+  List<Object> get props => [filePath];
+}
+

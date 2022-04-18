@@ -1,10 +1,20 @@
 part of 'home_cubit.dart';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
-}
+enum HomeTab { home, shared }
 
-class HomeInitial extends HomeState {
+class HomeState extends Equatable {
+  const HomeState._({
+    required this.tab
+  });
+
+  final HomeTab tab;
+
+  const HomeState.home():
+        this._(tab: HomeTab.home);
+
+  const HomeState.shared():
+        this._(tab: HomeTab.shared);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [tab];
 }

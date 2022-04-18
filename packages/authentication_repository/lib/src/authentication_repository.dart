@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// {@template log_in_with_email_and_password_failure}
 /// Thrown during the login process if a failure occurs.
@@ -152,7 +152,7 @@ class AuthenticationRepository {
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LoginWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
-      throw const LoginWithEmailAndPasswordFailure();
+      throw LoginWithEmailAndPasswordFailure();
     }
   }
 
@@ -175,3 +175,4 @@ extension on firebase_auth.User {
     return User(id: uid, email: email, userName: displayName);
   }
 }
+

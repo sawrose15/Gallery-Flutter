@@ -29,6 +29,13 @@
             {
               "client_id": "659833454474-bu1750jgjmtm0l38q0g00q3o2snqmc0d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "659833454474-mjq8utv8597oef12emmf8glgoe9l4e3p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sawrose.photoGallery"
+              }
             }
           ]
         }

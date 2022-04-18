@@ -100,12 +100,6 @@ class _LoginInput extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
             key: const Key('loginForm_loginButton'),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              primary: const Color(0xFF04B60A),
-            ),
             onPressed: state.status.isValidated ?
                 () => context.read<LoginCubit>().loginWithCredentials()
                 : null,
