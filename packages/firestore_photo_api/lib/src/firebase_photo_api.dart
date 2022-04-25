@@ -30,13 +30,16 @@ class FirebasePhotoApi implements PhotoApi {
           );
 
   @override
-  Future<void> addPhotoToFav(String userId, Photo photo) {
-    throw UnimplementedError();
+  Future<void> addPhotoToFav(String userId, Photo photo) async {
+    final checkPhoto =
+        await photoCollection.where('id', isEqualTo: photo.id).get();
+    final currentPhotoId = checkPhoto.docs[0].reference.id;
+    await photoCollection.doc(currentPhotoId).update(photo.toJson());
   }
 
   @override
   Stream<List<Photo>> getPhotos() {
-    return photoCollection.orderBy('uploadedDate').snapshots().map(
+    return photoCollection.snapshots().map(
           (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
         );
   }
@@ -44,7 +47,8 @@ class FirebasePhotoApi implements PhotoApi {
   @override
   Future<void> savePhoto(File file, Photo photo) async {
     final url = await savePhotoToStorage(file);
-    var updatedPhoto = photo.copyWith(filePath: url);
+    final updatedPhoto =
+        photo.copyWith(fileName: 'picture${const Uuid().v4()}', filePath: url);
     await photoCollection.add(updatedPhoto);
   }
 
@@ -57,7 +61,6 @@ class FirebasePhotoApi implements PhotoApi {
     final task = _galleryRef.child(const Uuid().v4()).putFile(file);
     final downloadUrl = await task;
     final url = await downloadUrl.ref.getDownloadURL();
-    print('Image link: $url');
     return url;
   }
 }

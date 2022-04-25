@@ -12,6 +12,7 @@ Photo _$PhotoFromJson(Map<String, dynamic> json) => Photo(
       filePath: json['filePath'] as String,
       uploadedBy: json['uploadedBy'] as String,
       uploadedDate: json['uploadedDate'] as String? ?? '',
+      isFav: json['isFav'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$PhotoToJson(Photo instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$PhotoToJson(Photo instance) => <String, dynamic>{
       'filePath': instance.filePath,
       'uploadedBy': instance.uploadedBy,
       'uploadedDate': instance.uploadedDate,
+      'isFav': instance.isFav,
     };

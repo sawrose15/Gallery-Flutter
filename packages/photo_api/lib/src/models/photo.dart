@@ -18,6 +18,7 @@ class Photo extends Equatable {
     required this.filePath,
     required this.uploadedBy,
     this.uploadedDate = '',
+    this.isFav = false,
   })  : assert(
           id == null || id.isNotEmpty,
           'id can not be null and should be empty',
@@ -29,6 +30,7 @@ class Photo extends Equatable {
   final String filePath;
   final String uploadedBy;
   final String uploadedDate;
+  final bool isFav;
 
   Photo copyWith({
     String? id,
@@ -36,13 +38,16 @@ class Photo extends Equatable {
     String? filePath,
     String? uploadedBy,
     String? uploadedDate,
+    bool? isFav
   }) {
     return Photo(
         id: id ?? this.id,
         fileName: fileName ?? this.fileName,
         filePath: filePath ?? this.filePath,
         uploadedBy: uploadedBy ?? this.uploadedBy,
-        uploadedDate: uploadedDate ?? this.uploadedDate);
+        uploadedDate: uploadedDate ?? this.uploadedDate,
+      isFav: isFav ?? this.isFav,
+    );
   }
 
   static Photo fromJson(JsonMap json) => _$PhotoFromJson(json);
@@ -50,5 +55,5 @@ class Photo extends Equatable {
   JsonMap toJson() => _$PhotoToJson(this);
 
   @override
-  List<Object?> get props => [id, fileName, uploadedBy, uploadedDate];
+  List<Object?> get props => [id, fileName, uploadedBy, uploadedDate, isFav];
 }
