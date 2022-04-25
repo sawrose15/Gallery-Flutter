@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery/app/bloc/app_bloc.dart';
 import 'package:photo_gallery/app/routes/routes.dart';
 import 'package:photo_gallery/home/home.dart';
+import 'package:photo_gallery/login/login.dart';
 import 'package:photo_gallery/photos_overview/bloc/photo_overview_bloc.dart';
+import 'package:photo_gallery/signup/sign_up.dart';
 import 'package:photo_gallery/theme.dart';
 
 class App extends StatelessWidget {
@@ -14,8 +16,7 @@ class App extends StatelessWidget {
     Key? key,
     required AuthenticationRepository authenticationRepository,
     required FirebasePhotoApi firebasePhotoApi,
-  })
-      :_authenticationRepository = authenticationRepository,
+  })  : _authenticationRepository = authenticationRepository,
         _firebasePhotoApi = firebasePhotoApi,
         super(key: key);
 
@@ -29,15 +30,22 @@ class App extends StatelessWidget {
           RepositoryProvider.value(value: _authenticationRepository),
           RepositoryProvider.value(value: _firebasePhotoApi),
         ],
-        child: MultiBlocProvider(providers: [
+        child: MultiBlocProvider(
+          providers: [
             BlocProvider(
-            create: (_) => AppBloc(authenticationRepository: _authenticationRepository)),
-          BlocProvider(create: (_) => HomeCubit()),
-          BlocProvider(create: (_) => PhotoOverviewBloc(firebasePhotoApi: _firebasePhotoApi)),
-    ],
-    child: const AppView(),
-    )
-    );
+                create: (_) => AppBloc(
+                    authenticationRepository: _authenticationRepository)),
+            BlocProvider(create: (context) => LoginCubit(
+                _authenticationRepository)),
+            BlocProvider(create: (context) => SignUpCubit(
+                _authenticationRepository)),
+            BlocProvider(create: (_) => HomeCubit()),
+            BlocProvider(
+                create: (_) =>
+                    PhotoOverviewBloc(firebasePhotoApi: _firebasePhotoApi)),
+          ],
+          child: const AppView(),
+        ));
   }
 }
 
@@ -55,4 +63,3 @@ class AppView extends StatelessWidget {
     );
   }
 }
-

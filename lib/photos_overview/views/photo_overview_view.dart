@@ -97,31 +97,21 @@ class _PhotoOverviewViewState extends State<PhotoOverviewView> {
             if (state.photos.isEmpty) {
               if (state.status == PhotoOverviewStatus.loading) {
                 return const Center(child: CupertinoActivityIndicator());
-              } else if (state.status == PhotoOverviewStatus.success) {
+              } else if (state.status != PhotoOverviewStatus.success) {
                 return const SizedBox();
               } else {
-                return Center(
+                return const Center(
                   child: Text(
                     "Gallery is empty",
-                    style: Theme.of(context).textTheme.caption,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 );
               }
             }
 
             return CupertinoScrollbar(
-              child:
-                  // PhotoOverviewGridLayout(photos: state.filteredPhoto)
-                  GridView.count(
-                      crossAxisCount: 2,
-                      padding: const EdgeInsets.all(8),
-                      mainAxisSpacing: 20.0,
-                      crossAxisSpacing: 20.0,
-                      children: [
-                    for (final photo in state.filteredPhoto)
-                      Image.network(photo.filePath)
-                  ]),
-            );
+                child: PhotoOverviewGridLayout(
+                    crossAxisCount: 3, photos: state.filteredPhoto.toList()));
           },
         ));
   }
@@ -135,10 +125,11 @@ class _PhotoOverviewViewState extends State<PhotoOverviewView> {
   }
 
   void _onScroll() {
-    if (_isBottom)
+    if (_isBottom) {
       context
           .read<PhotoOverviewBloc>()
           .add(const PhotoOverviewSubscriptionRequested());
+    }
   }
 
   bool get _isBottom {

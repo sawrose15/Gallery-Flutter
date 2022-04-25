@@ -7,7 +7,7 @@ abstract class PhotoOverviewEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class PhotoOverviewSubscriptionRequested extends PhotoOverviewEvent{
+class PhotoOverviewSubscriptionRequested extends PhotoOverviewEvent {
   const PhotoOverviewSubscriptionRequested();
 }
 
@@ -20,16 +20,58 @@ class PhotoOverviewFilterChanged extends PhotoOverviewEvent {
   List<Object?> get props => [filter];
 }
 
+class PhotoOverviewChangeGridLayout extends PhotoOverviewEvent {
+  final int gridSize;
+
+  const PhotoOverviewChangeGridLayout({
+    required this.gridSize
+  });
+
+  @override
+  List<Object?> get props => [gridSize];
+}
+
 class PhotoOverviewUploadPhoto extends PhotoOverviewEvent {
-  const PhotoOverviewUploadPhoto(
-      this.userId,
-      this.filePath);
+  const PhotoOverviewUploadPhoto(this.userId, this.filePath);
 
   final String userId;
   final String filePath;
 
   @override
-  List<Object?> get props => [userId,filePath];
+  List<Object?> get props => [userId, filePath];
 }
 
+class PhotoOverviewFavouriteToggle extends PhotoOverviewEvent {
+  final Photo photo;
+  final bool isFav;
 
+  const PhotoOverviewFavouriteToggle({
+    required this.photo,
+    required this.isFav,
+  });
+
+  @override
+  List<Object?> get props => [photo, isFav];
+}
+
+class PhotoOverviewDeletePhoto extends PhotoOverviewEvent {
+  final Photo photo;
+
+  const PhotoOverviewDeletePhoto({required this.photo});
+
+  @override
+  List<Object?> get props => [photo];
+}
+
+class PhotoOverviewRenamePhoto extends PhotoOverviewEvent {
+  final Photo photo;
+  final String fileName;
+
+  const PhotoOverviewRenamePhoto({
+    required this.photo,
+    required this.fileName
+  });
+
+  @override
+  List<Object?> get props => [photo, fileName];
+}

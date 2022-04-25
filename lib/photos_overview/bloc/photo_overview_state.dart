@@ -13,7 +13,7 @@ class PhotoOverviewState extends Equatable {
   final List<Photo> photos;
   final PhotoViewFilter filter;
 
-  Iterable<Photo> get filteredPhoto => filter.applyAll(photos);
+  Iterable<Photo> get filteredPhoto => filter.apply(photos);
 
   PhotoOverviewState copyWith({
     PhotoOverviewStatus Function()? status,

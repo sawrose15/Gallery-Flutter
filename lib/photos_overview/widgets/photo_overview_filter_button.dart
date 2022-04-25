@@ -27,8 +27,16 @@ class PhotoOverviewFilterButton extends StatelessWidget {
               child: Text('oldest-latest'),
           ),
           const PopupMenuItem(
-            value: PhotoViewFilter.alphabetically,
+            value: PhotoViewFilter.latest_oldest,
+            child: Text('latest-oldest'),
+          ),
+          const PopupMenuItem(
+            value: PhotoViewFilter.alphabetically_ascending,
             child: Text('a-z'),
+          ),
+          const PopupMenuItem(
+            value: PhotoViewFilter.alphabetically_decending,
+            child: Text('z-a'),
           ),
           const PopupMenuItem(
             value: PhotoViewFilter.favorite,

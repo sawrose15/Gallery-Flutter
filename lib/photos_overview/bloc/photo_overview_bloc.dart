@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firestore_photo_api/firebase_photo_api.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:photo_api/photo_api.dart';
 import 'package:photo_gallery/photos_overview/photo_overview.dart';
 
@@ -16,12 +18,34 @@ class PhotoOverviewBloc extends Bloc<PhotoOverviewEvent, PhotoOverviewState> {
     required FirebasePhotoApi firebasePhotoApi
   }):_firebasePhotoApi = firebasePhotoApi,
         super(const PhotoOverviewState()) {
+    on<PhotoOverviewUploadPhoto>(_onUploadPhoto);
     on<PhotoOverviewSubscriptionRequested>(_onSubscriptionRequested);
     on<PhotoOverviewFilterChanged>(_onFilterChanged);
-    on<PhotoOverviewUploadPhoto>(_onUploadPhoto);
+    on<PhotoOverviewChangeGridLayout>(_onGridChanged);
+    on<PhotoOverviewFavouriteToggle>(_onPhotoFavouriteToggle);
   }
 
   final FirebasePhotoApi _firebasePhotoApi;
+
+  Future<void> _onUploadPhoto(PhotoOverviewUploadPhoto event,
+      Emitter<PhotoOverviewState> emit,) async {
+    emit(state.copyWith(status: () => PhotoOverviewStatus.loading));
+
+    final file = File(event.filePath);
+    Photo photo = Photo(
+      filePath: file.path,
+      uploadedBy: event.userId,
+      uploadedDate: DateTime.now().toString(),
+    );
+
+    try {
+      await _firebasePhotoApi.savePhoto(file, photo);
+      emit(state.copyWith(status: () => PhotoOverviewStatus.success));
+    }
+    catch (e) {
+      emit(state.copyWith(status: () => PhotoOverviewStatus.failure));
+    }
+  }
 
   Future<void> _onSubscriptionRequested(
       PhotoOverviewSubscriptionRequested event,
@@ -44,23 +68,20 @@ class PhotoOverviewBloc extends Bloc<PhotoOverviewEvent, PhotoOverviewState> {
     emit(state.copyWith(filter: () => event.filter));
   }
 
-  Future<void> _onUploadPhoto(PhotoOverviewUploadPhoto event,
-      Emitter<PhotoOverviewState> emit,) async {
-    emit(state.copyWith(status: () => PhotoOverviewStatus.loading));
+  void _onGridChanged(
+      PhotoOverviewChangeGridLayout event,
+      Emitter<PhotoOverviewState> emit
+      ){
+    emit(state.copyWith(status:() => PhotoOverviewStatus.loading));
+  }
 
-    final file = File(event.filePath);
-    Photo photo = Photo(
-        filePath: file.path,
-        uploadedBy: event.userId,
-        uploadedDate: DateTime.now().toString(),
-    );
 
-    try {
-      await _firebasePhotoApi.savePhoto(file, photo);
-      emit(state.copyWith(status: () => PhotoOverviewStatus.success));
-    }
-    catch (e) {
-      emit(state.copyWith(status: () => PhotoOverviewStatus.failure));
-    }
+  Future<void> _onPhotoFavouriteToggle(
+      PhotoOverviewFavouriteToggle event,
+      Emitter<PhotoOverviewState> emit
+      ) async{
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid.toString();
+    final newPhoto = event.photo.copyWith(isFav: event.isFav);
+    await _firebasePhotoApi.addPhotoToFav(currentUserId, newPhoto);
   }
 }

@@ -16,6 +16,7 @@ Future<void> main() {
         options: DefaultFirebaseOptions.currentPlatform,
     );
     final authenticationRepository = AuthenticationRepository();
+    await authenticationRepository.user.first;
     runApp(App(
       authenticationRepository: authenticationRepository,
       firebasePhotoApi: FirebasePhotoApi(firebaseFirestore: FirebaseFirestore.instance,
