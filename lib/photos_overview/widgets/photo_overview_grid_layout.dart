@@ -18,90 +18,100 @@ class PhotoOverviewGridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
         shrinkWrap: true,
-        cacheExtent: 2400,
-        physics: const ScrollPhysics(),
+        scrollDirection: Axis.vertical,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
         ),
         itemCount: photos.length,
-        itemBuilder: (context, index) =>
-            ImageTile(
-                filePath: photos[index].filePath,
-                isFav: photos[index].isFav)
-    );
+        itemBuilder: (context, index) => ImageTile(
+              photo: photos[index],
+            ));
   }
 }
 
 class ImageTile extends StatelessWidget {
   const ImageTile({
     Key? key,
-    required this.filePath,
-    required this.isFav,
+    required this.photo,
   }) : super(key: key);
 
-  final String filePath;
-  final bool isFav;
+  final Photo photo;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
+    return Card(
+      elevation: 10.0,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
         children: [
-          Card(
-            elevation: 10.0,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Stack(
-              // alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: filePath,
-                    placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        )),
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    child: PopupMenuButton(
-                        color: Colors.black,
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: Colors.white,
+          CachedNetworkImage(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              fit: BoxFit.cover,
+              imageUrl: photo.filePath,
+              placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  )),
+          Positioned(
+              top: 0,
+              right: 0,
+              child: PopupMenuButton(
+                  color: Colors.black,
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
+                  itemBuilder: (context) {
+                    return [
+                      const PopupMenuItem(
+                        child: Text(
+                          "Share....",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        itemBuilder: (context) {
-                          return [
-                            const PopupMenuItem(
-                              child: Text(
-                                "Share....",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            const PopupMenuItem(
-                              child: Text("Rename",
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                            const PopupMenuItem(
-                              child: Text("Remove",
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ];
-                        })),
-                Positioned(
-                  top: 50,
-                    bottom: 0,
-                    right: 0,
-                    child: IconButton(
-                        onPressed: () {},
-                        color: Colors.white,
-                        icon: isFav
-                            ? const Icon(Icons.favorite, color: Colors.blue,)
-                            : const Icon(Icons.favorite_outline, color: Colors.white,)))
-              ],
-            ),
-          )
+                      ),
+                      PopupMenuItem(
+                        child: const Text("Rename",
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          context.read<PhotoOverviewBloc>().add(
+                              PhotoOverviewRenamePhoto(
+                                  photo: photo, fileName: "fileName"));
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: const Text("Remove",
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          context
+                              .read<PhotoOverviewBloc>()
+                              .add(PhotoOverviewDeletePhoto(photo: photo));
+                        },
+                      ),
+                    ];
+                  })),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: IconButton(
+                  onPressed: () {
+                    context.read<PhotoOverviewBloc>().add(
+                        PhotoOverviewFavouriteToggle(
+                            photo: photo,
+                            isFav: photo.isFav == true ? false : true));
+                  },
+                  color: Colors.white,
+                  icon: photo.isFav
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.blue,
+                        )
+                      : const Icon(
+                          Icons.favorite_outline,
+                          color: Colors.white,
+                        )))
         ],
       ),
     );

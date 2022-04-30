@@ -23,22 +23,19 @@ class PhotoOverviewFilterChanged extends PhotoOverviewEvent {
 class PhotoOverviewChangeGridLayout extends PhotoOverviewEvent {
   final int gridSize;
 
-  const PhotoOverviewChangeGridLayout({
-    required this.gridSize
-  });
+  const PhotoOverviewChangeGridLayout({required this.gridSize});
 
   @override
   List<Object?> get props => [gridSize];
 }
 
 class PhotoOverviewUploadPhoto extends PhotoOverviewEvent {
-  const PhotoOverviewUploadPhoto(this.userId, this.filePath);
+  const PhotoOverviewUploadPhoto(this.source);
 
-  final String userId;
-  final String filePath;
+  final ImageSource source;
 
   @override
-  List<Object?> get props => [userId, filePath];
+  List<Object?> get props => [source];
 }
 
 class PhotoOverviewFavouriteToggle extends PhotoOverviewEvent {
@@ -67,10 +64,7 @@ class PhotoOverviewRenamePhoto extends PhotoOverviewEvent {
   final Photo photo;
   final String fileName;
 
-  const PhotoOverviewRenamePhoto({
-    required this.photo,
-    required this.fileName
-  });
+  const PhotoOverviewRenamePhoto({required this.photo, required this.fileName});
 
   @override
   List<Object?> get props => [photo, fileName];

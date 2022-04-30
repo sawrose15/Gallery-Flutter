@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photo_gallery/home/cubit/home_cubit.dart';
 import 'package:photo_gallery/home/home.dart';
 import 'package:photo_gallery/photos_overview/photo_overview.dart';
+import 'package:photo_gallery/shared/shared.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,10 +14,10 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: [PhotoOverviewPage(), PhotoOverviewPage()],
+        children: const [PhotoOverviewPage(), SharedPage()],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: UploadImageButton(),
+      floatingActionButton: const UploadImageButton(),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.black,

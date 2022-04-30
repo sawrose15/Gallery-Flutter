@@ -9,16 +9,14 @@ import 'package:uuid/uuid.dart';
 
 class FirebasePhotoApi implements PhotoApi {
   ///@{macro} firebasePhotoApi
-  FirebasePhotoApi(
-      {required FirebaseStorage firebaseStorage,
-      required FirebaseFirestore firebaseFirestore})
-      : _firebaseStorage = firebaseStorage,
+  FirebasePhotoApi({
+    required FirebaseStorage firebaseStorage,
+    required FirebaseFirestore firebaseFirestore,
+  })  : _firebaseStorage = firebaseStorage,
         _firebaseFirestore = firebaseFirestore;
 
   final FirebaseStorage _firebaseStorage;
   final FirebaseFirestore _firebaseFirestore;
-
-  Map<String, Reference> refs = {};
 
   Reference get _galleryRef =>
       _firebaseStorage.ref('${FirebaseAuth.instance.currentUser?.uid}');
@@ -30,7 +28,7 @@ class FirebasePhotoApi implements PhotoApi {
           );
 
   @override
-  Future<void> addPhotoToFav(String userId, Photo photo) async {
+  Future<void> addPhotoToFav(Photo photo) async {
     final checkPhoto =
         await photoCollection.where('id', isEqualTo: photo.id).get();
     final currentPhotoId = checkPhoto.docs[0].reference.id;
@@ -39,7 +37,10 @@ class FirebasePhotoApi implements PhotoApi {
 
   @override
   Stream<List<Photo>> getPhotos() {
-    return photoCollection.snapshots().map(
+    return photoCollection
+        .where('uploadedBy', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots()
+        .map(
           (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
         );
   }
@@ -52,15 +53,24 @@ class FirebasePhotoApi implements PhotoApi {
     await photoCollection.add(updatedPhoto);
   }
 
-  @override
-  Future<void> savePhotos(String userId, List<Photo> photo) {
-    throw UnimplementedError();
-  }
-
   Future<String> savePhotoToStorage(File file) async {
     final task = _galleryRef.child(const Uuid().v4()).putFile(file);
     final downloadUrl = await task;
     final url = await downloadUrl.ref.getDownloadURL();
     return url;
+  }
+
+  @override
+  Future<void> deletePhoto(Photo photo) async {
+    final checkPhoto =
+        await photoCollection.where('id', isEqualTo: photo.id).get();
+    final currentPhotoId = checkPhoto.docs[0].reference.id;
+
+    try {
+      await _firebaseStorage.refFromURL(photo.filePath).delete();
+      await photoCollection.doc(currentPhotoId).delete();
+    } catch (e) {
+      throw PhotoNotFoundException();
+    }
   }
 }
