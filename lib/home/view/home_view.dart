@@ -12,6 +12,7 @@ class HomeView extends StatelessWidget {
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: selectedTab.index,
         children: const [PhotoOverviewPage(), SharedPage()],

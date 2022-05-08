@@ -1,29 +1,31 @@
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firestore_photo_api/firebase_photo_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 import 'package:photo_gallery/app/app.dart';
+import 'package:photo_gallery/di/di.dart';
 import 'package:photo_gallery/firebase_options.dart';
 
-Future<void> main() {
-  return BlocOverrides.runZoned(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-    );
-    final authenticationRepository = AuthenticationRepository();
-    await authenticationRepository.user.first;
-    runApp(App(
-      authenticationRepository: authenticationRepository,
-      firebasePhotoApi: FirebasePhotoApi(firebaseFirestore: FirebaseFirestore.instance,
-          firebaseStorage: FirebaseStorage.instance),
-    ));
-  },
-    blocObserver: AppBlocObserver()
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  _setupLogging();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+  configureInjection(Environment.prod);
+  return BlocOverrides.runZoned(
+      () =>
+          // final authenticationRepository = getIt<AuthenticationRepository>();
+          // await authenticationRepository.user.first;
+          runApp(const App()),
+      blocObserver: AppBlocObserver());
 }
 
+_setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
+}

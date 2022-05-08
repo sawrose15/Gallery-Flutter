@@ -1,5 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:firestore_photo_api/firebase_photo_api.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,41 +9,25 @@ import 'package:photo_gallery/photos_overview/bloc/photo_overview_bloc.dart';
 import 'package:photo_gallery/signup/sign_up.dart';
 import 'package:photo_gallery/theme.dart';
 
+import '../../di/di.dart';
+
 class App extends StatelessWidget {
   const App({
     Key? key,
-    required AuthenticationRepository authenticationRepository,
-    required FirebasePhotoApi firebasePhotoApi,
-  })  : _authenticationRepository = authenticationRepository,
-        _firebasePhotoApi = firebasePhotoApi,
-        super(key: key);
-
-  final AuthenticationRepository _authenticationRepository;
-  final FirebasePhotoApi _firebasePhotoApi;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider.value(value: _authenticationRepository),
-          RepositoryProvider.value(value: _firebasePhotoApi),
-        ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-                create: (_) => AppBloc(
-                    authenticationRepository: _authenticationRepository)),
-            BlocProvider(create: (context) => LoginCubit(
-                _authenticationRepository)),
-            BlocProvider(create: (context) => SignUpCubit(
-                _authenticationRepository)),
-            BlocProvider(create: (_) => HomeCubit()),
-            BlocProvider(
-                create: (_) =>
-                    PhotoOverviewBloc(firebasePhotoApi: _firebasePhotoApi)),
-          ],
-          child: const AppView(),
-        ));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<AppBloc>()),
+        BlocProvider(create: (_) => getIt<LoginCubit>()),
+        BlocProvider(create: (_) => getIt<SignUpCubit>()),
+        BlocProvider(create: (_) => getIt<HomeCubit>()),
+        BlocProvider(create: (_) => getIt<PhotoOverviewBloc>()),
+      ],
+      child: const AppView(),
+    );
   }
 }
 

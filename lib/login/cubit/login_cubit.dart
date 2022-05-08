@@ -3,15 +3,17 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
+import 'package:injectable/injectable.dart';
 
 part 'login_state.dart';
 
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authenticationRepository) : super(const LoginState());
 
   final AuthenticationRepository _authenticationRepository;
 
-  void emailChanged(String value){
+  void emailChanged(String value) {
     final email = Email.dirty(value);
     emit(state.copyWith(
       email: email,
@@ -19,8 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
     ));
   }
 
-
-  void passwordChanged(String value){
+  void passwordChanged(String value) {
     final password = Password.dirty(value);
     emit(state.copyWith(
       password: password,
@@ -28,25 +29,20 @@ class LoginCubit extends Cubit<LoginState> {
     ));
   }
 
-
   Future<void> loginWithCredentials() async {
-    if(!state.status.isValidated) return;
+    if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try{
-      await _authenticationRepository
-          .loginWithEmailAndPassword(
-          email: state.email.value,
-          password: state.password.value
-      );
+    try {
+      await _authenticationRepository.loginWithEmailAndPassword(
+          email: state.email.value, password: state.password.value);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on LoginWithEmailAndPasswordFailure catch (e){
+    } on LoginWithEmailAndPasswordFailure catch (e) {
       emit(state.copyWith(
         errorMessage: e.message,
         status: FormzStatus.submissionFailure,
       ));
-    } catch (_){
+    } catch (_) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
-
 }

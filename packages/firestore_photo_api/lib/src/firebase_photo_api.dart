@@ -8,15 +8,8 @@ import 'package:photo_api/photo_api.dart';
 import 'package:uuid/uuid.dart';
 
 class FirebasePhotoApi implements PhotoApi {
-  ///@{macro} firebasePhotoApi
-  FirebasePhotoApi({
-    required FirebaseStorage firebaseStorage,
-    required FirebaseFirestore firebaseFirestore,
-  })  : _firebaseStorage = firebaseStorage,
-        _firebaseFirestore = firebaseFirestore;
-
-  final FirebaseStorage _firebaseStorage;
-  final FirebaseFirestore _firebaseFirestore;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   Reference get _galleryRef =>
       _firebaseStorage.ref('${FirebaseAuth.instance.currentUser?.uid}');

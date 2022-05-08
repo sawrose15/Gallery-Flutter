@@ -7,13 +7,14 @@ class PhotoOverviewGridButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int _grid = context.select((PhotoOverviewBloc bloc) => bloc.state.gridSize);
     return BlocBuilder<PhotoOverviewBloc, PhotoOverviewState>(
         builder: (context, state) {
-      int size = state.gridSize;
+      _grid = state.gridSize;
       return IconButton(
           onPressed: () {
             context.read<PhotoOverviewBloc>().add(
-                PhotoOverviewChangeGridLayout(gridSize: (size == 5) ? 3 : 5));
+                PhotoOverviewChangeGridLayout(gridSize: (_grid == 3) ? 5 : 3));
           },
           icon: const Icon(Icons.grid_view));
     });
