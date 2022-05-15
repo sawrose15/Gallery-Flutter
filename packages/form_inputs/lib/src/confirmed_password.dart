@@ -6,6 +6,7 @@ enum ConfirmedPasswordValidationError {
   invalid
 }
 
+/// class for handling the confirmed password text
 class ConfirmedPassword
     extends FormzInput<String, ConfirmedPasswordValidationError> {
   /// {@macro confirmed_password}

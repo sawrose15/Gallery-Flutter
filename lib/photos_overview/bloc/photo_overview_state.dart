@@ -7,15 +7,13 @@ class PhotoOverviewState extends Equatable {
     this.status = PhotoOverviewStatus.initial,
     this.photos = const [],
     this.filter = PhotoViewFilter.oldest_latest,
-    this.initialPhoto,
-    this.gridSize = 3,
+    this.gridSize = 0,
     this.errorMessage,
   }) : assert(gridSize == 3 || gridSize == 5);
 
   final PhotoOverviewStatus status;
   final List<Photo> photos;
   final PhotoViewFilter filter;
-  final Photo? initialPhoto;
   final int gridSize;
   final String? errorMessage;
 
@@ -25,7 +23,6 @@ class PhotoOverviewState extends Equatable {
     PhotoOverviewStatus Function()? status,
     List<Photo> Function()? photos,
     PhotoViewFilter Function()? filter,
-    Photo Function()? initialPhoto,
     int Function()? gridSize,
     String Function()? errorMessage,
   }) {
@@ -33,13 +30,11 @@ class PhotoOverviewState extends Equatable {
       status: status != null ? status() : this.status,
       photos: photos != null ? photos() : this.photos,
       filter: filter != null ? filter() : this.filter,
-      initialPhoto: initialPhoto != null ? initialPhoto() : this.initialPhoto,
       gridSize: gridSize != null ? gridSize() : this.gridSize,
       errorMessage: errorMessage != null ? errorMessage() : this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [status, photos, filter, initialPhoto, gridSize, errorMessage];
+  List<Object?> get props => [status, photos, filter, gridSize, errorMessage];
 }

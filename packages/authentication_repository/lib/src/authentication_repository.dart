@@ -10,8 +10,10 @@ import 'package:meta/meta.dart';
 /// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithEmailAndPassword.html
 /// {@endtemplate}
 class LoginWithEmailAndPasswordFailure implements Exception {
-  const LoginWithEmailAndPasswordFailure(
-      [this.message = 'An Unknown Failure occured']);
+  ///@macro} constructor for login failures
+  const LoginWithEmailAndPasswordFailure([
+    this.message = 'An Unknown Failure occured',
+  ]);
 
   /// Create an authentication message
   /// from a firebase authentication exception code.
@@ -38,6 +40,7 @@ class LoginWithEmailAndPasswordFailure implements Exception {
     }
   }
 
+  ///Error message from server.
   final String message;
 }
 
@@ -124,6 +127,7 @@ class AuthenticationRepository {
     return _cache.read<User>(key: userCacheKey) ?? User.empty;
   }
 
+  /// method for signup using [email] and [password]
   Future<void> signUp({
     required String email,
     required String password,

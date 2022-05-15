@@ -12,6 +12,7 @@ class HomeView extends StatelessWidget {
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: selectedTab.index,
         children: const [PhotoOverviewPage(), SharedPage()],
@@ -21,7 +22,7 @@ class HomeView extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.black,
-        notchMargin: 2.0,
+        notchMargin: 4.0,
         clipBehavior: Clip.antiAlias,
         child: Row(
           mainAxisSize: MainAxisSize.max,

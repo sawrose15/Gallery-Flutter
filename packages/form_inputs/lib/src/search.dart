@@ -1,10 +1,12 @@
 import 'package:formz/formz.dart';
 
+/// error validation for search
 enum SearchValidationError {
-  //generic error
+  ///generic error
   invalid
 }
 
+/// class to handle search inputs.
 class Search extends FormzInput<String, SearchValidationError> {
   /// {@macro email}
   const Search.pure() : super.pure('');

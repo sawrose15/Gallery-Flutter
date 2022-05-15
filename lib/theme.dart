@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme(),
+  textTheme: GoogleFonts.latoTextTheme(),
   scaffoldBackgroundColor: const Color(0xFF393838),
   appBarTheme: const AppBarTheme(
-    backgroundColor:  Colors.black
+    color: Colors.black,
   ),
   inputDecorationTheme: InputDecorationTheme(
     fillColor: Colors.grey,
@@ -16,9 +16,9 @@ final theme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-        primary: Colors.green,
-        onPrimary: Colors.white,
-        onSurface: Colors.white70,
+      primary: Colors.green,
+      onPrimary: Colors.white,
+      onSurface: Colors.white70,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),

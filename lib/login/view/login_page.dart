@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery/login/login.dart';
+
+import '../../di/di.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,11 +13,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Login"),),
-      body: const Padding(
-        padding: EdgeInsets.all(8),
-        child: LoginForm(),
-          // create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
-          // child: const LoginForm(),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: BlocProvider(
+          create: (_) => getIt<LoginCubit>(),
+          child: const LoginForm(),
+        ),
       ),
     );
   }

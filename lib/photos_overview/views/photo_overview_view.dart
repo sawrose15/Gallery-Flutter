@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_api/photo_api.dart';
 import 'package:photo_gallery/photos_overview/photo_overview.dart';
 
 class PhotoOverviewView extends StatelessWidget {
@@ -46,19 +47,42 @@ class PhotoOverviewView extends StatelessWidget {
             }
 
             return CupertinoScrollbar(
-              child: Column(
-                children: [
-                  const PhotoOverviewSearchBar(),
-                  CupertinoScrollbar(
-                      child: PhotoOverviewGridLayout(
-                          crossAxisCount: state.gridSize,
-                          photos: state.filteredPhoto.toList())),
-                ],
-              ),
-            );
+                child: _buildItemWidget(
+                    state.gridSize, state.filteredPhoto.toList()));
           },
         ),
       ),
     );
+  }
+
+  Widget _buildItemWidget(int gridSize, List<Photo> photos) {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: gridSize,
+        ),
+        itemCount: photos.length,
+        itemBuilder: (context, index) =>
+            ImageNetworkWidget(
+              photo: photos[index],
+              onTap: () {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                        content: Text(
+                            'Photo clicked on: ${photos[index].fileName}'
+                        ),
+                    ),
+                  );
+              },
+              onFavToggle: () {
+                context
+                    .read<PhotoOverviewBloc>()
+                    .add(PhotoOverviewFavouriteToggle(
+                      photo: photos[index],
+                      isFav: photos[index].isFav == true ? false : true,
+                    ));
+              },
+            ));
   }
 }

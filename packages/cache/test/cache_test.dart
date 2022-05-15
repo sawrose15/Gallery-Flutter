@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('CacheClient', () {
-    test("Can read and write a value for given key", () {
+    test('Can read and write a value for given key', () {
       final cache = CacheClient();
       const key = '__key__';
       const value = '__value__';

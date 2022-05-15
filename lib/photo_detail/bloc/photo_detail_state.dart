@@ -11,7 +11,7 @@ class PhotoDetailState extends Equatable {
   final PhotoDetailStatus status;
   final Photo? initialPhoto;
 
-  bool get isNewTodo => initialPhoto == null;
+  bool get isNewPhoto => initialPhoto == null;
 
   PhotoDetailState copyWith({
     PhotoDetailStatus? status,
