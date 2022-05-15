@@ -6,6 +6,7 @@ class HomeState extends Equatable {
   const HomeState.shared() : this._(tab: HomeTab.shared);
 
   const HomeState.home() : this._(tab: HomeTab.home);
+
   const HomeState._({
     required this.tab,
   });

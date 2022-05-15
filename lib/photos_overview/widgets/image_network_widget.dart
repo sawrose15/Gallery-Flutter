@@ -49,18 +49,18 @@ class ImageNetworkWidget extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         CachedNetworkImage(
-          width: width,
-          height: height,
-          imageUrl: photo.filePath,
-          fit: BoxFit.cover,
-          placeholder: (context, value) {
-            return PlaceHolderWidget(
-              width: width,
-              height: height,
-            );
-          },
-          errorWidget: (context, url, dynamic error) => const Icon(Icons.error)
-        ),
+            width: width,
+            height: height,
+            imageUrl: photo.filePath,
+            fit: BoxFit.cover,
+            placeholder: (context, value) {
+              return PlaceHolderWidget(
+                width: width,
+                height: height,
+              );
+            },
+            errorWidget: (context, url, dynamic error) =>
+                const Icon(Icons.error)),
         Positioned(
             top: 0,
             right: 0,
@@ -95,13 +95,13 @@ class ImageNetworkWidget extends StatelessWidget {
                     ),
                     PopupMenuItem<ImageAction>(
                       value: ImageAction.rename,
-                      child: Text("Rename",
-                          style: TextStyle(color: Colors.white)),
+                      child:
+                          Text("Rename", style: TextStyle(color: Colors.white)),
                     ),
                     PopupMenuItem<ImageAction>(
                       value: ImageAction.delete,
-                      child: Text("Remove",
-                          style: TextStyle(color: Colors.white)),
+                      child:
+                          Text("Remove", style: TextStyle(color: Colors.white)),
                     ),
                   ];
                 })),

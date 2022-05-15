@@ -5,7 +5,6 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 import 'package:photo_gallery/firebase_options.dart';
 
@@ -31,20 +30,20 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   await runZonedGuarded(
-        () async {
+    () async {
       await BlocOverrides.runZoned(
-            () async  {
-              WidgetsFlutterBinding.ensureInitialized();
-              await Firebase.initializeApp(
-                options: DefaultFirebaseOptions.currentPlatform,
-              );
-              configureInjection(Environment.prod);
-              await getIt<AuthenticationRepository>().user.first;
-              runApp(await builder());
-            },
+        () async {
+          WidgetsFlutterBinding.ensureInitialized();
+          await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          );
+          configureInjection(Environment.prod);
+          await getIt<AuthenticationRepository>().user.first;
+          runApp(await builder());
+        },
         blocObserver: AppBlocObserver(),
       );
     },
-        (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

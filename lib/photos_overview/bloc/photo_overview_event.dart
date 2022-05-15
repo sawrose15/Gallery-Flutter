@@ -22,6 +22,7 @@ class PhotoOverviewFilterChanged extends PhotoOverviewEvent {
 
 class PhotoOverviewChangeGridLayout extends PhotoOverviewEvent {
   const PhotoOverviewChangeGridLayout({required this.gridSize});
+
   final int gridSize;
 
   @override
@@ -42,6 +43,7 @@ class PhotoOverviewFavouriteToggle extends PhotoOverviewEvent {
     required this.photo,
     required this.isFav,
   });
+
   final Photo photo;
   final bool isFav;
 
@@ -51,6 +53,7 @@ class PhotoOverviewFavouriteToggle extends PhotoOverviewEvent {
 
 class PhotoOverviewDeletePhoto extends PhotoOverviewEvent {
   const PhotoOverviewDeletePhoto({required this.photo});
+
   final Photo photo;
 
   @override
@@ -59,6 +62,7 @@ class PhotoOverviewDeletePhoto extends PhotoOverviewEvent {
 
 class PhotoOverviewRenamePhoto extends PhotoOverviewEvent {
   const PhotoOverviewRenamePhoto({required this.photo, required this.fileName});
+
   final Photo photo;
   final String fileName;
 

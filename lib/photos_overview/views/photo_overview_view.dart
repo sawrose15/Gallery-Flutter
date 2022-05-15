@@ -61,17 +61,15 @@ class PhotoOverviewView extends StatelessWidget {
           crossAxisCount: gridSize,
         ),
         itemCount: photos.length,
-        itemBuilder: (context, index) =>
-            ImageNetworkWidget(
+        itemBuilder: (context, index) => ImageNetworkWidget(
               photo: photos[index],
               onTap: () {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(
-                        content: Text(
-                            'Photo clicked on: ${photos[index].fileName}'
-                        ),
+                      content:
+                          Text('Photo clicked on: ${photos[index].fileName}'),
                     ),
                   );
               },

@@ -1,7 +1,5 @@
 import 'dart:ffi';
 
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:firestore_photo_api/firebase_photo_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery/di/di.dart';
