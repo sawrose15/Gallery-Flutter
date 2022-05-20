@@ -15,8 +15,9 @@ class PhotoOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => getIt<PhotoOverviewBloc>()
-          ..add(const PhotoOverviewSubscriptionRequested()),
-        child: const PhotoOverviewView());
+      create: (_) => getIt<PhotoOverviewBloc>()
+        ..add(const PhotoOverviewSubscriptionRequested()),
+      child: const PhotoOverviewView(),
+    );
   }
 }

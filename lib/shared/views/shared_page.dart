@@ -9,6 +9,8 @@ class SharedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => getIt<SharedBloc>(), child: const SharedView());
+      create: (context) => getIt<SharedBloc>(),
+      child: const SharedView(),
+    );
   }
 }

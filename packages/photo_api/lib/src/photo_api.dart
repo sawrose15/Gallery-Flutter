@@ -5,7 +5,8 @@ import 'package:photo_api/photo_api.dart';
 abstract class PhotoApi {
   PhotoApi();
 
-  Stream<List<Photo>> getPhotos(String userId);
+  Stream<List<Photo>> getPhotos(
+      {required String userId, String startAfterId = ''});
 
   Future<void> savePhoto(File file, Photo photo);
 

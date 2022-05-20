@@ -34,9 +34,11 @@ extension PhotoViewFilterX on PhotoViewFilter {
         photos.sort(sortByNameDesc);
         return photos;
       case PhotoViewFilter.favorite:
-        return photos.where((photo) =>
-            photo.isFav == true &&
-            photo.uploadedBy == '${FirebaseAuth.instance.currentUser?.uid}');
+        return photos.where(
+          (photo) =>
+              photo.isFav == true &&
+              photo.uploadedBy == '${FirebaseAuth.instance.currentUser?.uid}',
+        );
     }
   }
 }

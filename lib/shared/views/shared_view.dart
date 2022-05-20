@@ -7,7 +7,7 @@ class SharedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shared"),
+        title: const Text('Shared'),
       ),
     );
   }

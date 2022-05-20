@@ -6,9 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:photo_gallery/di/di.dart';
 import 'package:photo_gallery/firebase_options.dart';
-
-import 'di/di.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override

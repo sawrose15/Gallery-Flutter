@@ -112,7 +112,8 @@ class _LoginInput extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () => context.read<LoginCubit>().loginWithCredentials()
                     : null,
-                child: const Text("Login"));
+                child: const Text('Login'),
+              );
       },
     );
   }
@@ -123,11 +124,12 @@ class _SignUpInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-        key: const Key('loginForm_SignUpButton'),
-        onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
-        child: Text(
-          'Create Account',
-          style: TextStyle(color: theme.primaryColor),
-        ));
+      key: const Key('loginForm_SignUpButton'),
+      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+      child: Text(
+        'Create Account',
+        style: TextStyle(color: theme.primaryColor),
+      ),
+    );
   }
 }

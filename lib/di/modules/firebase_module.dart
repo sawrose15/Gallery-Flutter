@@ -6,7 +6,8 @@ import 'package:photo_api/photo_api.dart';
 
 /// Module to inject firebase dependencies
 ///
-/// this files helps to maintain the firebase dependencies required for the project
+/// this files helps to maintain the firebase dependencies
+/// required for the project
 @module
 abstract class FirebaseModule {
   @lazySingleton

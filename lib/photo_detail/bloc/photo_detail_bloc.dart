@@ -8,9 +8,14 @@ part 'photo_detail_state.dart';
 
 @injectable
 class PhotoDetailBloc extends Bloc<PhotoDetailEvent, PhotoDetailState> {
-  PhotoDetailBloc() : super(const PhotoDetailState()) {
-    on<PhotoDetailEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  PhotoDetailBloc({
+    required PhotoApi photoApi,
+  })  : _photoApi = photoApi,
+        super(
+          const PhotoDetailState(),
+        ) {
+    on<PhotoDetailEvent>((event, emit) {});
   }
+
+  final PhotoApi _photoApi;
 }

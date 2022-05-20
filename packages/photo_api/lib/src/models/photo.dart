@@ -36,14 +36,14 @@ class Photo extends Equatable {
     String? filePath,
     String? uploadedBy,
     String? uploadedDate,
-    bool? isFav
+    bool? isFav,
   }) {
     return Photo(
-        id: id ?? this.id,
-        fileName: fileName ?? this.fileName,
-        filePath: filePath ?? this.filePath,
-        uploadedBy: uploadedBy ?? this.uploadedBy,
-        uploadedDate: uploadedDate ?? this.uploadedDate,
+      id: id ?? this.id,
+      fileName: fileName ?? this.fileName,
+      filePath: filePath ?? this.filePath,
+      uploadedBy: uploadedBy ?? this.uploadedBy,
+      uploadedDate: uploadedDate ?? this.uploadedDate,
       isFav: isFav ?? this.isFav,
     );
   }

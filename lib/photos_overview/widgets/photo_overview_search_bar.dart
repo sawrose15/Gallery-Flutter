@@ -6,13 +6,14 @@ class PhotoOverviewSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8),
       child: const TextField(
         key: Key('photo_overview_search_view'),
         decoration: InputDecoration(
-            label: Text('Search'),
-            labelStyle: TextStyle(color: Colors.white),
-            icon: Icon(Icons.search)),
+          label: Text('Search'),
+          labelStyle: TextStyle(color: Colors.white),
+          icon: Icon(Icons.search),
+        ),
       ),
     );
   }

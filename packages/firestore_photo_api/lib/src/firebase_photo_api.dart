@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,9 +28,15 @@ class FirebasePhotoApi implements PhotoApi {
   }
 
   @override
-  Stream<List<Photo>> getPhotos(String userId) {
+  Stream<List<Photo>> getPhotos({
+    required String userId,
+    String startAfterId = '',
+  }) {
     return photoCollection
         .where('uploadedBy', isEqualTo: userId)
+        .orderBy('id')
+        .startAfter([startAfterId])
+        .limit(10)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
@@ -39,8 +46,10 @@ class FirebasePhotoApi implements PhotoApi {
   @override
   Future<void> savePhoto(File file, Photo photo) async {
     final url = await savePhotoToStorage(file, photo.uploadedBy);
-    final updatedPhoto =
-        photo.copyWith(fileName: 'picture${const Uuid().v4()}', filePath: url);
+    final updatedPhoto = photo.copyWith(
+      fileName: 'picture${Random().nextInt(90000) + 10000}',
+      filePath: url,
+    );
     await photoCollection.add(updatedPhoto);
   }
 

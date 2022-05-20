@@ -10,7 +10,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
@@ -20,12 +19,9 @@ class HomeView extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const UploadImageButton(),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
         color: Colors.black,
-        notchMargin: 4.0,
-        clipBehavior: Clip.antiAlias,
+        shape: const CircularNotchedRectangle(),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _HomeTabButton(
@@ -62,9 +58,8 @@ class _HomeTabButton extends StatelessWidget {
     return IconButton(
       onPressed: () => context.read<HomeCubit>().setTab(value),
       iconSize: 32,
-      color: groupValue != value
-          ? Colors.white
-          : Theme.of(context).colorScheme.secondary,
+      color:
+          groupValue != value ? Colors.white : Colors.blue,
       icon: icon,
     );
   }
