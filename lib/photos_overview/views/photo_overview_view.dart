@@ -1,75 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_gallery/photo_detail/photo_detail.dart';
 import 'package:photo_gallery/photos_overview/photo_overview.dart';
-
-// class PhotoOverviewView extends StatelessWidget {
-//   const PhotoOverviewView({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Gallery App"),
-//         actions: const <Widget>[
-//           PhotoOverviewGridButton(),
-//           PhotoOverviewFilterButton(),
-//           PhotoOverviewLogoutButton(),
-//         ],
-//       ),
-//       body: BlocListener<PhotoOverviewBloc, PhotoOverviewState>(
-//         listenWhen: (previous, current) => previous.status != current.status,
-//         listener: (context, state) {
-//           if (state.status == PhotoOverviewStatus.failure) {
-//             ScaffoldMessenger.of(context)
-//               ..hideCurrentSnackBar()
-//               ..showSnackBar(
-//                 const SnackBar(content: Text("Error Retrieving Photos")),
-//               );
-//           }
-//         },
-//         child: BlocBuilder<PhotoOverviewBloc, PhotoOverviewState>(
-//           builder: (context, state) {
-//             if (state.photos.isEmpty) {
-//               if (state.status == PhotoOverviewStatus.loading) {
-//                 return const Center(child: CupertinoActivityIndicator());
-//               } else if (state.status == PhotoOverviewStatus.success) {
-//                 return const SizedBox();
-//               } else {
-//                 return Center(
-//                   child: Text(
-//                     "Gallery is empty",
-//                     style: Theme.of(context).textTheme.caption,
-//                   ),
-//                 );
-//               }
-//             }
-//
-//             return CupertinoScrollbar(
-//               child:
-//                   // PhotoOverviewGridLayout(photos: state.filteredPhoto)
-//                   GridView.count(
-//                       crossAxisCount: 2,
-//                       padding: const EdgeInsets.all(8),
-//                       mainAxisSpacing: 20.0,
-//                       crossAxisSpacing: 20.0,
-//                       children: [
-//                     for (final photo in state.filteredPhoto)
-//                       Image.network(photo.filePath)
-//                   ]),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:photo_gallery/photos_overview/widgets/bottom_loader.dart';
 
 class PhotoOverviewView extends StatefulWidget {
   const PhotoOverviewView({Key? key}) : super(key: key);
 
   @override
-  _PhotoOverviewViewState createState() => _PhotoOverviewViewState();
+  State<PhotoOverviewView> createState() => _PhotoOverviewViewState();
 }
 
 class _PhotoOverviewViewState extends State<PhotoOverviewView> {
@@ -84,36 +23,67 @@ class _PhotoOverviewViewState extends State<PhotoOverviewView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Gallery App"),
-          actions: const <Widget>[
-            PhotoOverviewGridButton(),
-            PhotoOverviewFilterButton(),
-            PhotoOverviewLogoutButton(),
-          ],
-        ),
-        body: BlocBuilder<PhotoOverviewBloc, PhotoOverviewState>(
-          builder: (context, state) {
-            if (state.photos.isEmpty) {
-              if (state.status == PhotoOverviewStatus.loading) {
-                return const Center(child: CupertinoActivityIndicator());
-              } else if (state.status != PhotoOverviewStatus.success) {
-                return const SizedBox();
-              } else {
-                return const Center(
+      appBar: AppBar(
+        title: const Text('Gallery App'),
+        actions: const <Widget>[
+          PhotoOverviewGridButton(),
+          PhotoOverviewFilterButton(),
+          PhotoOverviewLogoutButton(),
+        ],
+      ),
+      body: BlocBuilder<PhotoOverviewBloc, PhotoOverviewState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case PhotoOverviewStatus.failure:
+              return const Center(
+                child: Text('Failed to fetch data'),
+              );
+            case PhotoOverviewStatus.success:
+              if (state.filteredPhoto.isEmpty) {
+                return Center(
                   child: Text(
-                    "Gallery is empty",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    'Gallery is empty',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 );
               }
-            }
-
-            return CupertinoScrollbar(
-                child: PhotoOverviewGridLayout(
-                    crossAxisCount: 3, photos: state.filteredPhoto.toList()));
-          },
-        ));
+              return GridView.builder(
+                controller: _scrollController,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: state.gridSize,
+                ),
+                itemCount: state.hasReachedMax
+                    ? state.photos.length
+                    : state.photos.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return index >= state.photos.length
+                      ? const BottomLoader()
+                      : PhotoOverviewImageList(
+                          photo: state.photos[index],
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PhotoDetailPage.route(state.photos[index]),
+                            );
+                          },
+                          onFavToggle: () {
+                            context.read<PhotoOverviewBloc>().add(
+                                  PhotoOverviewFavouriteToggle(
+                                    photo: state.photos[index],
+                                    isFav: state.photos[index].isFav
+                                        ? false
+                                        : true,
+                                  ),
+                                );
+                          },
+                        );
+                },
+              );
+            default:
+              return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
   }
 
   @override

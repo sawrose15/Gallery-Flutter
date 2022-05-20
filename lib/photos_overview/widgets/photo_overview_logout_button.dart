@@ -8,8 +8,9 @@ class PhotoOverviewLogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        key: const Key('homePage_logoutButton'),
-        onPressed: () => context.read<AppBloc>().add(AppLogoutRequested()),
-        icon: const Icon(Icons.logout));
+      key: const Key('homePage_logoutButton'),
+      onPressed: () => context.read<AppBloc>().add(AppLogoutRequested()),
+      icon: const Icon(Icons.logout),
+    );
   }
 }

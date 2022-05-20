@@ -27,16 +27,25 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset('assets/logo.png',
+              Image.asset(
+                'assets/logo.png',
                 height: 120,
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(
+                height: 16,
+              ),
               _EmailInput(),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               _PasswordInput(),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               _LoginInput(),
-              const SizedBox(height: 4,),
+              const SizedBox(
+                height: 4,
+              ),
               _SignUpInput(),
             ],
           ),
@@ -78,6 +87,7 @@ class _PasswordInput extends StatelessWidget {
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
           decoration: InputDecoration(
             labelText: 'Password',
             helperText: '',
@@ -90,7 +100,6 @@ class _PasswordInput extends StatelessWidget {
 }
 
 class _LoginInput extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -99,35 +108,28 @@ class _LoginInput extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-            key: const Key('loginForm_loginButton'),
-            onPressed: state.status.isValidated ?
-                () => context.read<LoginCubit>().loginWithCredentials()
-                : null,
-            child: const Text("Login")
-        );
+                key: const Key('loginForm_loginButton'),
+                onPressed: state.status.isValidated
+                    ? () => context.read<LoginCubit>().loginWithCredentials()
+                    : null,
+                child: const Text('Login'),
+              );
       },
     );
   }
 }
 
 class _SignUpInput extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-        key: const Key('loginForm_SignUpButton'),
-        onPressed: () =>
-          Navigator.of(context).push<void>(SignUpPage.route()),
-        child: Text(
-          'Create Account',
-          style: TextStyle(color: theme.primaryColor),
-        )
+      key: const Key('loginForm_SignUpButton'),
+      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+      child: Text(
+        'Create Account',
+        style: TextStyle(color: theme.primaryColor),
+      ),
     );
-    return Container();
   }
 }
-
-
-
-

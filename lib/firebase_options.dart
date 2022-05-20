@@ -53,7 +53,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '659833454474',
     projectId: 'gallery-flutter-e6cb6',
     storageBucket: 'gallery-flutter-e6cb6.appspot.com',
-    iosClientId: '659833454474-kesvhpeoe2kvadf86rrgrk3r44rs0sgr.apps.googleusercontent.com',
+    iosClientId:
+        '659833454474-kesvhpeoe2kvadf86rrgrk3r44rs0sgr.apps.googleusercontent.com',
     iosBundleId: 'com.sawrose.gallery-ios',
   );
 }

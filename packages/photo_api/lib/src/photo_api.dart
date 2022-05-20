@@ -2,16 +2,19 @@ import 'dart:io';
 
 import 'package:photo_api/photo_api.dart';
 
-abstract class PhotoApi{
+abstract class PhotoApi {
   PhotoApi();
 
-  Stream<List<Photo>> getPhotos();
+  Stream<List<Photo>> getPhotos(
+      {required String userId, String startAfterId = ''});
 
-  Future<void> savePhoto(File file,Photo photo);
+  Future<void> savePhoto(File file, Photo photo);
 
-  Future<void> savePhotos(String userId,List<Photo> photos);
+  Future<void> addPhotoToFav(Photo photo);
 
-  Future<void> addPhotoToFav(String userId,Photo photo);
+  Future<void> deletePhoto(Photo photo);
+
+  Future<void> updatePhoto(Photo photo);
 }
 
-class PhotoNotFoundException implements Exception{}
+class PhotoNotFoundException implements Exception {}

@@ -10,9 +10,13 @@ enum PhotoViewFilter {
 }
 
 int sortByName(Photo a, Photo b) => a.fileName.compareTo(b.fileName);
+
 int sortByNameDesc(Photo a, Photo b) => b.fileName.compareTo(a.fileName);
+
 int sortbyDate(Photo a, Photo b) => a.uploadedDate.compareTo(b.uploadedDate);
-int sortbyDateDesc(Photo a, Photo b) => b.uploadedDate.compareTo(a.uploadedDate);
+
+int sortbyDateDesc(Photo a, Photo b) =>
+    b.uploadedDate.compareTo(a.uploadedDate);
 
 extension PhotoViewFilterX on PhotoViewFilter {
   Iterable<Photo> apply(List<Photo> photos) {
@@ -30,9 +34,10 @@ extension PhotoViewFilterX on PhotoViewFilter {
         photos.sort(sortByNameDesc);
         return photos;
       case PhotoViewFilter.favorite:
-        return photos.where((photo) =>
-            photo.isFav == true &&
-            photo.uploadedBy == '${FirebaseAuth.instance.currentUser?.uid}'
+        return photos.where(
+          (photo) =>
+              photo.isFav == true &&
+              photo.uploadedBy == '${FirebaseAuth.instance.currentUser?.uid}',
         );
     }
   }

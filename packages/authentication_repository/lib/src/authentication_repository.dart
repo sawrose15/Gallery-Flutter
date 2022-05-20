@@ -10,8 +10,10 @@ import 'package:meta/meta.dart';
 /// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithEmailAndPassword.html
 /// {@endtemplate}
 class LoginWithEmailAndPasswordFailure implements Exception {
-  const LoginWithEmailAndPasswordFailure(
-      [this.message = 'An Unknown Failure occured']);
+  ///@macro} constructor for login failures
+  const LoginWithEmailAndPasswordFailure([
+    this.message = 'An Unknown Failure occured',
+  ]);
 
   /// Create an authentication message
   /// from a firebase authentication exception code.
@@ -19,10 +21,12 @@ class LoginWithEmailAndPasswordFailure implements Exception {
     switch (code) {
       case 'invalid-email':
         return const LoginWithEmailAndPasswordFailure(
-            'Email is not valid or badly formatted.');
+          'Email is not valid or badly formatted.',
+        );
       case 'user-disabled':
         return const LoginWithEmailAndPasswordFailure(
-            'This user has been disabled. Please contact the support team.');
+          'This user has been disabled. Please contact the support team.',
+        );
       case 'user-not-found':
         return const LoginWithEmailAndPasswordFailure(
           'Email is not found, please create an account.',
@@ -36,6 +40,7 @@ class LoginWithEmailAndPasswordFailure implements Exception {
     }
   }
 
+  ///Error message from server.
   final String message;
 }
 
@@ -93,8 +98,7 @@ class AuthenticationRepository {
   AuthenticationRepository({
     CacheClient? cache,
     firebase_auth.FirebaseAuth? firebaseAuth,
-  })
-      : _cache = cache ?? CacheClient(),
+  })  : _cache = cache ?? CacheClient(),
         _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   final CacheClient _cache;
@@ -110,7 +114,7 @@ class AuthenticationRepository {
   ///
   /// Emits [User.empty] if the user is not authenticated.
   Stream<User> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser){
+    return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
       _cache.write(key: userCacheKey, value: user);
       return user;
@@ -123,13 +127,15 @@ class AuthenticationRepository {
     return _cache.read<User>(key: userCacheKey) ?? User.empty;
   }
 
-  Future<void> signUp({required String email,
+  /// method for signup using [email] and [password]
+  Future<void> signUp({
+    required String email,
     required String password,
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
@@ -138,7 +144,6 @@ class AuthenticationRepository {
     }
   }
 
-
   ///Sign in with email and password
   Future<void> loginWithEmailAndPassword({
     required String email,
@@ -146,13 +151,13 @@ class AuthenticationRepository {
   }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LoginWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
-      throw LoginWithEmailAndPasswordFailure();
+      throw const LoginWithEmailAndPasswordFailure();
     }
   }
 
@@ -169,10 +174,8 @@ class AuthenticationRepository {
   }
 }
 
-
 extension on firebase_auth.User {
   User get toUser {
     return User(id: uid, email: email, userName: displayName);
   }
 }
-

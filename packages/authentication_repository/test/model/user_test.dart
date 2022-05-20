@@ -5,13 +5,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main(){
   group('User', (){
-    const id = "mock-id";
-    const email = "mock-email";
+    const id = 'mock-id';
+    const email = 'mock-email';
 
     test('use value equality', (){
       expect(
-          const User(id:id, email: email),
-          equals(const User(id: id, email: email)));
+          const User(id:id, email: email,),
+          equals(const User(id: id, email: email,)),);
     });
 
     test('isEmpty true for empty User', (){

@@ -20,11 +20,11 @@ class PhotoOverviewFilterButton extends StatelessWidget {
             .read<PhotoOverviewBloc>()
             .add(PhotoOverviewFilterChanged(filter));
       },
-      itemBuilder: (context){
+      itemBuilder: (context) {
         return [
           const PopupMenuItem(
             value: PhotoViewFilter.oldest_latest,
-              child: Text('oldest-latest'),
+            child: Text('oldest-latest'),
           ),
           const PopupMenuItem(
             value: PhotoViewFilter.latest_oldest,
