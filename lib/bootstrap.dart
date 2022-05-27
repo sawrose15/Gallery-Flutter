@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:photo_gallery/di/di.dart';
+import 'package:photo_gallery/features/core/data/datasources/cache.dart';
 import 'package:photo_gallery/firebase_options.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -36,8 +36,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
           await Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform,
           );
+          await Cache.init();
           configureInjection(Environment.prod);
-          await getIt<AuthenticationRepository>().user.first;
+          // await getIt<AuthRepositoryInterface>().user.first;
           runApp(await builder());
         },
         blocObserver: AppBlocObserver(),

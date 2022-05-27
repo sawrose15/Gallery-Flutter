@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firestore_photo_api/firebase_photo_api.dart';
 import 'package:injectable/injectable.dart';
-import 'package:photo_api/photo_api.dart';
 
 /// Module to inject firebase dependencies
 ///
@@ -10,8 +8,8 @@ import 'package:photo_api/photo_api.dart';
 /// required for the project
 @module
 abstract class FirebaseModule {
-  @lazySingleton
-  PhotoApi get firebasePhotoApi => FirebasePhotoApi();
+  // @lazySingleton
+  // PhotoApi get firebasePhotoApi => FirebasePhotoApi();
 
   @lazySingleton
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;

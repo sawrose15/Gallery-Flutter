@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
   appBarTheme: const AppBarTheme(
-    color: Colors.black,
+    color: Colors.transparent,
     toolbarTextStyle: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.w600,
