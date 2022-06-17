@@ -13,6 +13,6 @@ class RegisterUsecase extends UseCase<User, UserParams> {
 
   @override
   Future<Either<Failure, User>> execute(UserParams params) async {
-    return _repository.registerWithEmailAndPassword(params);
+    return await _repository.registerWithEmailAndPassword(params);
   }
 }

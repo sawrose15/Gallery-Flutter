@@ -26,6 +26,22 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
+  late final _$currentUserAtom =
+      Atom(name: 'AppStoreBase.currentUser', context: context);
+
+  @override
+  User? get currentUser {
+    _$currentUserAtom.reportRead();
+    return super.currentUser;
+  }
+
+  @override
+  set currentUser(User? value) {
+    _$currentUserAtom.reportWrite(value, super.currentUser, () {
+      super.currentUser = value;
+    });
+  }
+
   late final _$isUserLoggedInAtom =
       Atom(name: 'AppStoreBase.isUserLoggedIn', context: context);
 
@@ -42,27 +58,28 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$userAtom = Atom(name: 'AppStoreBase.user', context: context);
+  late final _$saveUserAsyncAction =
+      AsyncAction('AppStoreBase.saveUser', context: context);
 
   @override
-  User? get user {
-    _$userAtom.reportRead();
-    return super.user;
+  Future<void> saveUser(User value) {
+    return _$saveUserAsyncAction.run(() => super.saveUser(value));
   }
 
+  late final _$deleteUserAsyncAction =
+      AsyncAction('AppStoreBase.deleteUser', context: context);
+
   @override
-  set user(User? value) {
-    _$userAtom.reportWrite(value, super.user, () {
-      super.user = value;
-    });
+  Future<void> deleteUser() {
+    return _$deleteUserAsyncAction.run(() => super.deleteUser());
   }
 
   @override
   String toString() {
     return '''
 hasInternetConnection: ${hasInternetConnection},
-isUserLoggedIn: ${isUserLoggedIn},
-user: ${user}
+currentUser: ${currentUser},
+isUserLoggedIn: ${isUserLoggedIn}
     ''';
   }
 }

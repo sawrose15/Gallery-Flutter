@@ -4,7 +4,12 @@ import 'package:photo_gallery/di/di.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
-@injectableInit
-void configureInjection(String env) {
+@InjectableInit(
+  initializerName: r'$initGetIt',
+  preferRelativeImports: false,
+  asExtension: false,
+  usesNullSafety: true,
+)
+void configureInjection(String env) async {
   $initGetIt(getIt, environment: env);
 }

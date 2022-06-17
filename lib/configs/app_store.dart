@@ -1,4 +1,3 @@
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:photo_gallery/configs/constants.dart';
 import 'package:photo_gallery/features/authentication/domain/entities/user.dart';
@@ -12,27 +11,25 @@ class AppStore = AppStoreBase with _$AppStore;
 
 abstract class AppStoreBase with Store {
   @observable
-  bool hasInternetConnection = true;
+  bool hasInternetConnection = false;
+
+  @observable
+  User? currentUser;
 
   @observable
   bool isUserLoggedIn = false;
 
-  @observable
-  User? user;
-
+  @action
   Future<void> saveUser(User value) async {
-    user = value;
+    currentUser = value;
     isUserLoggedIn = true;
-    await Cache.saveData(key: userCacheKey, value: value);
+    Cache.saveData(key: userCacheKey, value: value.toJson());
   }
 
-  Future<void> deleteUser(User value) async {
-    user = null;
+  @action
+  Future<void> deleteUser() async {
+    currentUser = null;
     isUserLoggedIn = false;
-    await Cache.removeData(userCacheKey);
-  }
-
-  Future<void> updateInternetConnection() async {
-    hasInternetConnection = await InternetConnectionChecker().hasConnection;
+    Cache.removeData(userCacheKey);
   }
 }

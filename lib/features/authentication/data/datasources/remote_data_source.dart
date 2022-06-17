@@ -9,7 +9,7 @@ abstract class RemoteDataSource {
   Future<User> loginWithEmailAndPassword(UserParams params);
   Future<User> registerWithEmailAndPassword(UserParams params);
   Future<bool> logout();
-  Stream<User> get user;
+  Future<User> checkAuthentication();
 }
 
 @LazySingleton(as: RemoteDataSource)
@@ -64,12 +64,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Stream<User> get user {
-    return _auth.authStateChanges().map((firebaseUser) {
-      final user = firebaseUser == null
-          ? User.empty
-          : User(uid: firebaseUser.uid, email: firebaseUser.email);
-      return user;
-    });
+  Future<User> checkAuthentication() async {
+    try {
+      if (_auth.currentUser != null) {
+        return User(
+          email: _auth.currentUser!.email,
+          uid: _auth.currentUser!.uid,
+        );
+      } else {
+        throw CheckAuthenticationException();
+      }
+    } catch (_) {
+      throw CheckAuthenticationException();
+    }
   }
 }

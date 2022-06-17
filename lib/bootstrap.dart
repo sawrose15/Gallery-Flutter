@@ -38,7 +38,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
           );
           await Cache.init();
           configureInjection(Environment.prod);
-          // await getIt<AuthRepositoryInterface>().user.first;
           runApp(await builder());
         },
         blocObserver: AppBlocObserver(),

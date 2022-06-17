@@ -12,6 +12,6 @@ class LogoutUsecase extends UseCase<bool, NoParams> {
 
   @override
   Future<Either<Failure, bool>> execute(NoParams params) async {
-    return _repository.logout();
+    return await _repository.logout();
   }
 }

@@ -1,31 +1,53 @@
-import 'package:flutter/material.dart';
-import 'package:photo_gallery/features/authentication/presentation/pages/login/views/login_page.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:photo_gallery/features/authentication/presentation/pages/login/login.dart';
+import 'package:photo_gallery/features/authentication/presentation/pages/register/register.dart';
 import 'package:photo_gallery/features/home/presentation/pages/home_page.dart';
+import 'package:photo_gallery/features/photo_overview_list/presentation/pages/photo_overview_page.dart';
+import 'package:photo_gallery/features/shared/presentation/pages/shared_page.dart';
+import 'package:photo_gallery/utils/AuthGuard.dart';
 
-abstract class AppRoutes {
-  static const home = '/home';
-  static const login = '/login';
-  static const register = '/register';
-  static const photoOverview = '/photo_overview';
-  static const photoDetail = '/photo_detail';
-  static const shared = '/shared';
-}
+@MaterialAutoRouter(
+  replaceInRouteName: 'Page,Route',
+  routes: <AutoRoute>[
+    AutoRoute(
+      page: LoginPage,
+      path: '/login',
+    ),
+    AutoRoute(
+      page: RegisterPage,
+      path: '/register',
+    ),
+    AutoRoute(
+      page: HomePage,
+      initial: true,
+      path: '/',
+      guards: [AuthGuard],
+      children: [
+        AutoRoute(
+          page: EmptyPageRoute,
+          maintainState: true,
+          name: 'photoFullRoute',
+          path: 'photoFullRoute',
+          children: [
+            AutoRoute(
+              page: PhotoOverviewPage,
+              name: 'photoOverview',
+              initial: true,
+            ),
+          ],
+        ),
+        AutoRoute(
+          path: 'shared',
+          name: 'SharedRoute',
+          page: SharedPage,
+        ),
+      ],
+    ),
+  ],
+)
+class $AppRoute {}
 
-class AppRouter {
-  Route onGenerateRoute(RouteSettings setting) {
-    switch (setting.name) {
-      case AppRoutes.home:
-        return MaterialPageRoute(
-          builder: (_) => const HomePage(),
-        );
-      case AppRoutes.login:
-        return MaterialPageRoute(
-          builder: (_) => const LoginPage(),
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Container(),
-        );
-    }
-  }
+class EmptyPageRoute extends AutoRouter {
+  const EmptyPageRoute({Key? key}) : super(key: key);
 }
