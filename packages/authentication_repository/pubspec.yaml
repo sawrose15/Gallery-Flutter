@@ -11,7 +11,7 @@ dependencies:
     path: ../cache
 
   equatable: ^2.0.3
-  firebase_auth: ^3.3.18
+  firebase_auth: ^5.0.0
   firebase_core: ^1.17.0
   flutter:
     sdk: flutter
