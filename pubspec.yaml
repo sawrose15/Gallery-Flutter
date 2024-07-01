@@ -30,7 +30,7 @@ dependencies:
   flow_builder: ^0.0.8
 
   #http for network calls
-  http: ^0.13.4
+  http: ^1.0.0
 
   #flutter Bloc for architecture of the application
   flutter_bloc: ^8.0.1
