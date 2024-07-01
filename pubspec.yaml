@@ -34,7 +34,7 @@ dependencies:
 
   #flutter Bloc for architecture of the application
   flutter_bloc: ^8.0.1
-  flutter_hooks: ^0.18.4
+  flutter_hooks: ^0.20.0
 
   google_fonts: ^2.3.2
   photo_view: ^0.13.0
