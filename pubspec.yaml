@@ -51,7 +51,7 @@ dependencies:
 
   uuid: ^3.0.6
   shimmer: ^2.0.0
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^9.0.0
   injectable: ^1.5.3
   get_it: ^7.2.0
   flutter_native_image: ^0.0.6+1
