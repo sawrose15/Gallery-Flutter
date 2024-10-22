@@ -25,7 +25,7 @@ dependencies:
   firestore_photo_api:
     path: packages/firestore_photo_api
 
-  formz: ^0.4.1
+  formz: ^0.8.0
   equatable: ^2.0.3
   flow_builder: ^0.0.8
 
